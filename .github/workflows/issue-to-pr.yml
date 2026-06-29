@@ -1,0 +1,80 @@
+# Converts a `source-submission` issue (filed by `cgtag registry submit`) into a PR:
+# parses the ```toml block, writes the source config + registry.toml entry, opens a PR
+# that closes the issue. A maintainer reviews and merges.
+name: issue-to-pr
+
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  build-pr:
+    if: github.event.label.name == 'source-submission'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract submission into files
+        id: extract
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          python3 - <<'PY'
+          import os, re, tomllib, pathlib
+
+          body = os.environ["ISSUE_BODY"]
+          num = os.environ["ISSUE_NUMBER"]
+
+          m = re.search(r"```toml\s*\n(.*?)```", body, re.DOTALL)
+          if not m:
+              raise SystemExit("no ```toml block found in the issue body")
+          snippet = m.group(1)
+
+          data = tomllib.loads(snippet)
+          srcs = data.get("sources", [])
+          if not srcs:
+              raise SystemExit("snippet has no [[sources]]")
+          s = srcs[0]
+          name, version = s["name"], s["version"]
+          assembly = s.get("assembly", "")
+          anns = data.get("annotations", [])
+          desc = anns[0].get("description", "") if anns else ""
+
+          rel = f"sources/{name}@{version}.toml"
+          pathlib.Path("sources").mkdir(exist_ok=True)
+          pathlib.Path(rel).write_text(snippet)
+
+          # Append a registry.toml entry if (name, version) isn't already present.
+          reg = pathlib.Path("registry.toml")
+          existing = tomllib.loads(reg.read_text()) if reg.exists() else {}
+          have = any(e.get("name") == name and e.get("version") == version
+                     for e in existing.get("sources", []))
+          if not have:
+              entry = (f'\n[[sources]]\nname        = "{name}"\nversion     = "{version}"\n'
+                       f'assembly    = "{assembly}"\nfile        = "{rel}"\n'
+                       f'description = "{desc}"\n')
+              with reg.open("a") as f:
+                  f.write(entry)
+
+          with open(os.environ["GITHUB_OUTPUT"], "a") as out:
+              out.write(f"name={name}\nversion={version}\nbranch=submit/{name}-{version}-{num}\n")
+          PY
+
+      - name: Open pull request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: ${{ steps.extract.outputs.branch }}
+          base: main
+          title: "Add source ${{ steps.extract.outputs.name }}@${{ steps.extract.outputs.version }}"
+          body: |
+            Adds `${{ steps.extract.outputs.name }}@${{ steps.extract.outputs.version }}` from #${{ github.event.issue.number }}.
+
+            Closes #${{ github.event.issue.number }}
+          labels: source-submission
+          commit-message: "Add source ${{ steps.extract.outputs.name }}@${{ steps.extract.outputs.version }}"
