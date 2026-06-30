@@ -66,8 +66,12 @@ jobs:
               out.write(f"name={name}\nversion={version}\nbranch=submit/{name}-{version}-{num}\n")
           PY
 
+      # NOTE: opening the PR requires the repo setting "Allow GitHub Actions to
+      # create and approve pull requests" (Settings → Actions → General → Workflow
+      # permissions). Without it this step fails with "GitHub Actions is not
+      # permitted to create or approve pull requests". See README setup.
       - name: Open pull request
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           branch: ${{ steps.extract.outputs.branch }}
           base: main
