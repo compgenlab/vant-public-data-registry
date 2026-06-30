@@ -16,3 +16,10 @@
 # name        = "2026-06"
 # file        = "releases/2026-06.toml"
 # description = "GRCh38 starter release"
+
+[[sources]]
+name        = "dbSNP"
+version     = "b156"
+assembly    = "GRCh38"
+file        = "sources/dbSNP/b156/dbSNP@b156.toml"
+description = ""
