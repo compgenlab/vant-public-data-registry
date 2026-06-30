@@ -46,8 +46,10 @@ jobs:
           anns = data.get("annotations", [])
           desc = anns[0].get("description", "") if anns else ""
 
-          rel = f"sources/{name}/{name}@{version}/{name}@{version}.toml"
+          rel = f"sources/{name}/{version}/{name}@{version}.toml"
+          reldir = f"sources/{name}/{version}"
           pathlib.Path("sources").mkdir(exist_ok=True)
+          pathlib.Path(reldir).mkdir(exist_ok=True)
           pathlib.Path(rel).write_text(snippet)
 
           # Append a registry.toml entry if (name, version) isn't already present.
