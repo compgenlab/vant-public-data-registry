@@ -11,27 +11,32 @@ name = "dbSNP"
 version = "b157"
 assembly = "GRCh38"
 file = "sources/dbSNP/b157/dbSNP-b157.toml"
+latest = true
 
 [[sources]]
 name = "ClinVar"
 version = "20250202"
 assembly = "GRCh38"
 file = "sources/ClinVar/20250202/ClinVar-20250202.toml"
+latest = true
 
 [[sources]]
 name = "CADD"
 version = "1.7"
 assembly = "GRCh38"
 file = "sources/CADD/1.7/CADD-1.7.toml"
+latest = true
 
 [[sources]]
 name = "gnomAD"
 version = "4.1.0"
 assembly = "GRCh38"
 file = "sources/gnomAD/4.1.0/gnomAD-4.1.0.toml"
+latest = true
 
 [[sources]]
 name = "REVEL"
 version = "1.3"
+assembly = "GRCh38"
 file = "sources/REVEL/1.3/REVEL-1.3.toml"
 latest = true
