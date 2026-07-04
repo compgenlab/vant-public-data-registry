@@ -2,6 +2,7 @@
   name = "gencode"
   version = "48"
   format = "gtf"
+  assembly = "GRCh38"
   url = "https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_48/gencode.v48.annotation.gtf.gz"
 
   [[sources.annotations]]
