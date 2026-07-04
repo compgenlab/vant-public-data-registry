@@ -2,6 +2,7 @@
   name = "RefSeq"
   version = "2024_08"
   format = "gtf"
+  assembly = "GRCh38"
   url = "https://ftp.ncbi.nlm.nih.gov/refseq/H_sapiens/annotation/GRCh38_latest/refseq_identifiers"
   [sources.build]
     inputs = [
