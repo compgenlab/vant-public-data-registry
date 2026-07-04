@@ -9,6 +9,7 @@
   engine = "apptainer"
   output = "vep.vcf.gz"
   runner = "local"
+  assets   = ["expand_vep_vcf.py", "vep_vcf_worst_consequence.py"]
 
   [[sources.setup]]
     name = "install"
