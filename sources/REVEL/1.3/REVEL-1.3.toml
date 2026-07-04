@@ -189,7 +189,7 @@
     run = [
       "cd {workdir} && for z in inputs/*.zip; do unzip -o $z -d segments; done",
       "python3 {workdir}/convert_csv_to_tab.py {workdir}/segments/segments/*.csv | sort -k 1,1 -k 2,2n | cgvant bgzip > {output}",
-      "cgvant tabix -s 1 -b 2 -e 2 {output}",
+      "cgvant tabix -S 1 -s 1 -b 2 -e 2 {output}",
     ]
 
   [[sources.annotations]]

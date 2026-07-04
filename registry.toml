@@ -46,3 +46,15 @@ name = "vep"
 version = "113"
 file = "sources/vep/113/vep-113.toml"
 latest = true
+
+[[sources]]
+name = "RefSeq"
+version = "2024_08"
+file = "sources/RefSeq/2024_08/RefSeq-2024_08.toml"
+latest = true
+
+[[sources]]
+name = "gencode"
+version = "48"
+file = "sources/gencode/48/gencode-48.toml"
+latest = true
