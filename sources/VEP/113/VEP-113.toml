@@ -8,8 +8,8 @@
   image = "docker://ensemblorg/ensembl-vep:release_113.3"
   engine = "apptainer"
   output = "vep.vcf.gz"
-  runner = "local"
   assets   = ["expand_vep_vcf.py", "vep_vcf_worst_consequence.py"]
+  threads = 4
 
   [[sources.setup]]
     name = "install"
