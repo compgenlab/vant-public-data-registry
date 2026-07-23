@@ -6,7 +6,7 @@
   url = "https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/weekly/clinvar_20250202.vcf.gz"
   url_index = "https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/weekly/clinvar_20250202.vcf.gz.tbi"
   checksum = "md5:https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/weekly/clinvar_20250202.vcf.gz.md5"
-  checksum_index = "md5:https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/weekly/clinvar_20250202.vcf.gz.tbi.md5"
+  #checksum_index = "md5:https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/weekly/clinvar_20250202.vcf.gz.tbi.md5"
 
   [[sources.annotations]]
     name = "CLINVAR_MATCH"
